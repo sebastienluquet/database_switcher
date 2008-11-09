@@ -1,0 +1,8 @@
+--- 
+format: 1
+handler: 
+  piston:remote-revision: 1154
+  piston:uuid: e399ad1b-28a1-4f19-9382-54f608dd8c85
+repository_url: http://looping.soluscience.fr/svn/ProjetsWeb/AgenceMo/trunk/vendor/plugins/database_switcher/
+lock: 
+repository_class: Piston::Svn::Repository
