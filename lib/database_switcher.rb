@@ -1,6 +1,7 @@
 class ActiveRecord::ConnectionAdapters::AbstractAdapter  
   attr_reader :connection_options
 end
+
 def switch_database database
   option = ActiveRecord::Base.connection.connection_options
   ActiveRecord::Base.establish_connection(
