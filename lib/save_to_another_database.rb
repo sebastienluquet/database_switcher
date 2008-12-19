@@ -3,7 +3,7 @@ class ActiveRecord::Base
   def save_to database = 'test'
     old = ActiveRecord::Base.connection.connection_options[3]
     switch_database database
-    if self.class.find_by_id(self.id).nil?
+    if self.class.send("find_by_#{self.class.primary_key}", self.id).nil?
       r = self.clone
       r.id = self.id
       r.save
