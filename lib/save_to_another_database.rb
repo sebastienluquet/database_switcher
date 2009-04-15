@@ -9,5 +9,6 @@ class ActiveRecord::Base
       r.save
     end
     switch_database old
+    r
   end
 end
