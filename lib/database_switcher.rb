@@ -17,6 +17,10 @@ end
 module DatabaseSwitcher
   attr_accessor :database
 
+  def self.record?
+    false
+  end
+
   def use_database database
     @database = database
     include UseRecetteDataBase
