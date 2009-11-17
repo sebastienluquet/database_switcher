@@ -1,6 +1,6 @@
 namespace :db do
   namespace :fixtures do
-    desc 'Create YAML test fixtures from data in an existing database.
+    desc 'Create YAML test fixtures from data in an existing database. Load specific fixtures using FIXTURES=x,y. Load specific models using MODELS=x,y
     Defaults to development database. Set RAILS_ENV to override.'
   
     task :extract => :environment do
@@ -12,6 +12,7 @@ namespace :db do
         classes = classes.map{|c|c if c.table_exists? and !c.table_name['version']}.compact
       end
       classes = active_record_models
+      classes += ENV['MODELS'].split(/,/).map(&:constantize) if ENV['MODELS']
       sql = "SELECT * FROM %s ORDER BY %s"
       skip_tables = ["schema_info", "sessions", "schema_migrations"]
       ActiveRecord::Base.establish_connection
