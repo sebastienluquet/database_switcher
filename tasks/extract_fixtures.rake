@@ -41,6 +41,7 @@ namespace :db do
           else
             h = {}
           end
+          to = {}.respond_to?(:ya2yaml) ? :ya2yaml : :to_yaml
           File.open("#{RAILS_ROOT}/test/fixtures/#{table_name}.yml", 'w') do |file|
             data = ActiveRecord::Base.connection.select_all(sql % [table_name, classe.primary_key])
             file.write data.inject({}) { |hash, record|
@@ -52,7 +53,7 @@ namespace :db do
               end
               hash[name] = record
               hash
-            }.to_yaml
+            }.send to
           end
         end
       end
