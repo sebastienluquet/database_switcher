@@ -6,8 +6,10 @@ ARGV.each do |arg|
     def DatabaseSwitcher.record?
       true
     end
-    def DatabaseSwitcher.record_to
-      #$2
+    DatabaseSwitcher.class_eval do
+      def self.record_to
+        $2
+      end
     end
     require 'record_to_another_database'
   end

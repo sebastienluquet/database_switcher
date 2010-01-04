@@ -7,7 +7,7 @@ if DatabaseSwitcher.record?
         self.class_eval do
           include SaveToAnotherDatabase
           def after_find
-            self.save_to :forum_test
+            self.save_to DatabaseSwitcher.record_to
           end
         end
         super
