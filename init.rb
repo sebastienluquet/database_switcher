@@ -2,14 +2,17 @@
 ARGV.each do |arg|
   if arg =~ /^(\w+)=(.*)$/ and $1 == 'RECORDER'
     require 'database_switcher'
-    DatabaseSwitcher
     def DatabaseSwitcher.record?
       true
     end
     DatabaseSwitcher.class_eval do
       def self.record_to
-        $2
+        ActiveRecord::Base.configurations['test']['database']
       end
+      @database = $2
+    end
+    def DatabaseSwitcher.record_from
+      @database
     end
     require 'record_to_another_database'
   end
