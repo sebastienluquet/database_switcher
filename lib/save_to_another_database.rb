@@ -15,6 +15,8 @@ module SaveToAnotherDatabase
       r.id = self.id
       r.skip_callbacks = true
       r.save(false)
+    elsif DatabaseSwitcher.record_and_update?
+      r.update_attributes attributes
     end
     if DatabaseSwitcher.record?
       self.class.module_eval do

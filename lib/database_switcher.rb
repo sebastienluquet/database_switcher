@@ -21,6 +21,10 @@ module DatabaseSwitcher
     false
   end
 
+  def self.record_and_update?
+    false
+  end
+
   def use_database database
     @database = database
     include UseRecetteDataBase
