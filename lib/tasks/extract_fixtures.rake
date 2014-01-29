@@ -2,10 +2,10 @@ namespace :db do
   namespace :fixtures do
     desc 'Create YAML test fixtures from data in an existing database. Load specific fixtures using FIXTURES=x,y. Load specific models using MODELS=x,y
     Defaults to development database. Set RAILS_ENV to override.'
-  
+
     task :extract => :environment do
       def active_record_models
-        Dir.glob(File.join(RAILS_ROOT,'app','models','**','*.rb')).each do |file|
+        Dir.glob(Rails.root.join('**', 'app','models','**','*.rb')).each do |file|
           require_dependency file
         end
         classes = ActiveRecord::Base.send(:subclasses)
@@ -36,13 +36,13 @@ namespace :db do
               end
             end
           end
-          if File.exists? "#{RAILS_ROOT}/test/fixtures/#{table_name}.yml"
-            h = YAML.load_file("#{RAILS_ROOT}/test/fixtures/#{table_name}.yml")
+          if File.exists? Rails.root.join("test/fixtures/#{table_name}.yml")
+            h = YAML.load_file(Rails.root.join("test/fixtures/#{table_name}.yml"))
           else
             h = {}
           end
           to = {}.respond_to?(:ya2yaml) ? :ya2yaml : :to_yaml
-          File.open("#{RAILS_ROOT}/test/fixtures/#{table_name}.yml", 'w') do |file|
+          File.open(Rails.root.join("test/fixtures/#{table_name}.yml"), 'w') do |file|
             data = ActiveRecord::Base.connection.select_all(sql % [table_name, classe.primary_key])
             file.write data.inject({}) { |hash, record|
               id = classe ? record[classe.primary_key] : i.succ!
